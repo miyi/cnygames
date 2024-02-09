@@ -1,0 +1,10 @@
+img {
+  height: 30vh;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+img:hover {
+  transform: scale(1.2);
+  transition: transform 0.3s;
+}

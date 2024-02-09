@@ -1,0 +1,47 @@
+<html>
+  <script type="dagger/modules">
+    {
+      view: "#view",
+      css: "#css"
+    }
+  </script>
+  <template id="view">
+    <div class="container">
+      <div class="control">
+        <a class="cat back" href="home">&#x25c0&#x25c0</a>
+      </div>
+      <div class="content"><template $html="$router.constants.layer2"></template></div>
+    </div>
+  </template>
+  <style id="css" type="dagger/style">
+
+
+.control {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 8vh;
+  overflow: hidden;
+}
+
+.control .cat {
+  flex: 1;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 8vh;
+  transition: filter 0.3s;
+}
+
+.cat:hover {
+  filter: contrast(1.75);
+  transition: filter 0.3s;
+}
+
+.back {
+  background-color: rgb(146, 209, 232);
+}
+  </style>
+</html>
+

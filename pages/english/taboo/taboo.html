@@ -1,0 +1,74 @@
+<html>
+  <script type="dagger/modules">
+    {
+      view: "#view",
+      sets: "./tabooData.js",
+      start: "#start",
+      card: "#card",
+      timer: "/components/timer.html",
+      css: "./style.css",
+      js: "./script.js",
+      util: "../../../util.js"
+    }
+  </script>
+  <template id="view">
+    <div
+      class="container"
+      +loading="{
+        mode: 'easy',
+        start: false,
+        easySet: easy_set(),
+        hardSet: hard_set(),
+        testSet: test_set(),
+        timer: 0,
+        time: 60,
+        active: null,
+      }"
+      $watch#1="tick(timer, $scope)"
+      $watch#2="start&&timer==0?stopGame($scope):null"
+      $watch#3="testSet.length==0?testSet=test_set():null"
+      $watch#4="easySet.length==0?easySet=easy_set():null"
+      $watch#5="hardSet.length==0?hardSet=hard_set():null"
+
+    >
+      <div class="control">
+        <a class="cat back" href="english" $exist="!start">&#x25c0&#x25c0</a>
+        <div
+          class="cat difficulty"
+          $exist="!start"
+          +loading="{
+            settings:['easy', 'hard', 'test'],
+            index: 0,
+          }"
+          +click="index++, mode=settings[index%settings.length]"
+        >
+          ${mode}
+        </div>
+        <div $exist="start" class="cat stop" +click="stopGame($scope)">
+          STOP
+        </div>
+      </div>
+      <div class="game">
+        <timer></timer>
+        <start $exist="!start"></start>
+        <card $exist="start"></card>
+      </div>
+    </div>
+  </template>
+  <template id="start">
+    <div class="card start" +click="loadCard($scope), startGame($scope)">
+      <div class="header"></div>
+      <div class="hints">
+        <div class="start-text">START!</div>
+      </div>
+    </div>
+  </template>
+  <template id="card">
+    <div class="card" +click="loadCard($scope)">
+      <div class="header"><div class="header-text">${active.word}</div></div>
+      <div class="hints">
+        <div class="hint" $each="active.hints">${item}</div>
+      </div>
+    </div>
+  </template>
+</html>

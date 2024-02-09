@@ -1,0 +1,63 @@
+<html>
+  <script type="dagger/modules">
+    {
+      view: "#view",
+      data: "./data.js",
+      script: "./script.js",
+      css: "./style.css",
+      board: "#board",
+      bezel: "#bezel",
+      row: "#row"
+    }
+  </script>
+  <template id="view">
+    <div 
+      class="container"
+      +loading="{
+        start: false,
+      }"
+    >
+      <div class="control">
+        <a class="cat back" href="poetry" $exist="!start" >&#x25c0&#x25c0</a>
+        <div
+          class="cat start"
+          $exist="!start"
+          +click="start=true"
+        >
+          开始
+        </div>
+        <div $exist="start" class="cat stop" +click="start=false">
+          揭秘
+        </div>
+      </div>
+      <div class="game" +loading="{char: '', checking: false}">
+        <div $style="'color: white'">${checking}</div>
+        <input class="char-input" $value#input="char" $watch="char?checking=true:null" +keydown="$event.key===' '?$event.preventDefault():null" maxlength="1"/>
+        <board +loading="loadOne()"></board>
+      </div>
+    </div>
+  </template>
+  <template id="board">
+    <div class="splitflap-display">
+      <row $each="poem" +loading="{row: item, rowdex: index}"></row>
+    </div>
+  </template>
+  <template id="bezel">
+    <div 
+      class="split-flap"
+      +loading="{
+        key: $scope.key?key:'风',
+        matched: false,
+      }"
+      $watch="check(char, matched, $node, $scope)" 
+      +animationiteration="animationStart($node, $scope),console.log('start')" 
+      +animationend="animationEnd(char, key, $node, $scope),console.log('end')"
+    >
+    </div>
+  </template>
+  <template id="row">
+    <div class="row">
+      <bezel $each="row" +loading="{key: item, keydex: index}"></bezel>
+    </div>
+  </template>
+</html>

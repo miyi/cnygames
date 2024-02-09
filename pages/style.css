@@ -1,0 +1,31 @@
+h1 {
+  color: black;
+  font-size: 8vh;
+  -webkit-text-fill-color: rgb(
+    176,
+    21,
+    21
+  ); /* Will override color (regardless of order) */
+  -webkit-text-stroke: 2px rgb(222, 195, 37);
+  stroke-width: 12px;
+  margin: 0.5rem;
+}
+
+h1:hover {
+  text-shadow: 0 0 7px #fff, 0 0 10px rgba(255, 230, 0, 0.697),
+    0 0 21px rgba(255, 230, 0, 0.588);
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

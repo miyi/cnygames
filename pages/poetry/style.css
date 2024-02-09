@@ -1,0 +1,26 @@
+.option {
+  width: 30vw;
+  height: 25vh;
+  transition: filter 0.3s, transform 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.option:hover {
+  filter: contrast(1.75);
+  transform: scale(1.1);
+  transition: filter 0.3s, transform 0.3s;
+}
+
+.hang {
+  background-color: rgb(173, 136, 207);
+}
+
+.charade {
+  background-color: rgb(233, 155, 10);
+}
+
+.title {
+  font-size: 8vh;
+}
