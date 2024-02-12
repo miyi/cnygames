@@ -15,6 +15,9 @@
       class="container"
       +loading="{
         start: false,
+        bank: loadBank(),
+        target: null,
+        pos: 0,
       }"
     >
       <div class="control">
@@ -22,18 +25,30 @@
         <div
           class="cat start"
           $exist="!start"
-          +click="start=true"
+          +click="start=true, target=bank[pos%12], console.log(target)"
         >
           开始
         </div>
         <div $exist="start" class="cat stop" +click="start=false">
           揭秘
         </div>
+        <div $exist="start" class="cat next" +click="pos++, start=false, target=null">&#x25B6;&#x25B6;</div>
       </div>
-      <div class="game" +loading="{char: '', checking: false}">
-        <div $style="'color: white'">${checking}</div>
-        <input class="char-input" $value#input="char" $watch="char?checking=true:null" +keydown="$event.key===' '?$event.preventDefault():null" maxlength="1"/>
-        <board +loading="loadOne()"></board>
+      <div $exist="!start" class="game">
+        <div class="msg">
+          尚未开始游戏
+        </div>
+      </div>
+      
+      <div $exist="start&&target" class="game" +loading="{char: ' ', input: '', list: [], checking: false}">
+        <div class="btn-group">
+          <input class="char-input" $value#input="input" $watch="char?checking=true:null" +keydown="$event.key===' '?$event.preventDefault():null" maxlength="1"/>
+          <div class="input-btn" +click="pushToChar($scope)"><span>祝你好运</span></div>
+        </div>
+        <board +loading="target"></board>
+        <div class="letter-board">
+          <div $each="list">${item}</div>
+        </div>
       </div>
     </div>
   </template>
@@ -44,15 +59,22 @@
   </template>
   <template id="bezel">
     <div 
-      class="split-flap"
+      class="bezel"
       +loading="{
         key: $scope.key?key:'风',
         matched: false,
       }"
+      +loaded="preMatch(key, $node, $scope)"
       $watch="check(char, matched, $node, $scope)" 
-      +animationiteration="animationStart($node, $scope),console.log('start')" 
-      +animationend="animationEnd(char, key, $node, $scope),console.log('end')"
+      +animationiteration="animationStart($node, $scope)" 
+      +animationend="animationEnd(char, key, $node, $scope)"
     >
+      <svg>
+        <line x1='50%' y1='0%' x2='50%' y2='100%' />
+        <line x1='0%' y1='50%' x2='100%' y2='50%' />
+        <line x1='0' y1='100%' x2='100%' y2='0' />
+        <line x1='0' y1='0' x2='100%' y2='100%' />
+      </svg>
     </div>
   </template>
   <template id="row">
