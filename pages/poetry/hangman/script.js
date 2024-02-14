@@ -5,7 +5,10 @@ const makeChar = () => {
   return possible.charAt(Math.floor(Math.random() * possible.length));
 };
 
-export const check = (char, matched, $node, $scope) => {
+const setDelay = (rowlength, rowdex, keydex) =>
+  rowlength * rowdex * 40 + 40 * keydex + Math.round(Math.random() * 200);
+
+const check = (char, matched, $node, $scope) => {
   if (!matched && char) {
     const delay = setDelay($scope.row.length, $scope.rowdex, $scope.keydex);
     setTimeout(() => {
@@ -14,7 +17,7 @@ export const check = (char, matched, $node, $scope) => {
   }
 };
 
-export const animationStart = ($node, $scope) => {
+const animationStart = ($node, $scope) => {
   if (!$scope.matched) {
     let i = 0;
     const test = [
@@ -31,15 +34,7 @@ export const animationStart = ($node, $scope) => {
   }
 };
 
-export const preMatch = (key, $node, $scope) => {
-  if (key === "," || key === "。" || key === "，") {
-    $node.classList.add("flip");
-    $node.setAttribute("data-letter", key);
-    $scope.matched = true;
-  }
-};
-
-export const animationEnd = (char, key, $node, $scope) => {
+const animationEnd = (char, key, $node, $scope) => {
   if ($scope.matched === false) {
     if (char === key) {
       $node.setAttribute("data-letter", char);
@@ -57,20 +52,25 @@ export const animationEnd = (char, key, $node, $scope) => {
   }
 };
 
-export const setDelay = (rowlength, rowdex, keydex) =>
-  rowlength * rowdex * 100 + 100 * keydex + Math.round(Math.random() * 400);
-
-export const pushToChar = ($scope) => {
+const pushToEntry = ($scope) => {
   if ($scope.input) {
-    $scope.char = $scope.input;
+    $scope.entry = $scope.input;
     $scope.list.push($scope.input);
     $scope.input = "";
   }
 };
 
-export const getPoem = ($scope) => {
-  const len = $scope.bank.length;
-  const random = Math.floor(Math.random() * len);
-  const target = $scope.bank.splice(random, 1);
-  $scope.target = target[0];
+const isClue = (item, index, rowdex, $scope) => {
+  if (item === "," || item === "。" || item === "，") {
+    return true;
+  } else if (
+    $scope.clue &&
+    $scope.clue[0][0] === rowdex &&
+    $scope.clue[0][1] === index
+  ) {
+    $scope.clue.splice(0, 1);
+    return true;
+  }
+  return false;
 };
+export { check, animationStart, animationEnd, isClue, pushToEntry};
