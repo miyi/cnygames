@@ -16,6 +16,18 @@ return {
         modules: ["layout", "english"],
         constants: { layer1: "layout", layer2: "english", title: "英语" },
         tailable: true,
+        children: [
+          {
+            path: "taboo",
+            modules: "taboo",
+            constants: { layer1: "taboo", title: "taboo" },
+          },
+          {
+            path: "scattergory",
+            modules: "scattergory",
+            constants: { layer1: "scattergory", title: "scattergory" },
+          },
+        ],
       },
       {
         path: "knowledge",
@@ -25,24 +37,15 @@ return {
       {
         path: "poetry",
         modules: ["layout", "poetry"],
+        tailable: true,
         constants: { layer1: "layout", layer2: "poetry", title: "诗集" },
-      },
-      {
-        path: "taboo",
-        modules: "taboo",
-        constants: { layer1: "taboo", title: "taboo" },
-      },
-      {
-        path: "scattergory",
-        modules: "scattergory",
-        constants: { layer1: "scattergory", title: "scattergory" },
-      },
-      {
-        path: "hangman",
-        modules: "hangman",
-        constants: {
-          layer1: "hangman",
-        },
+        children: [
+          {
+            path: "hangman",
+            modules: "hangman",
+            constants: { layer1: "hangman", title: "title" },
+          },
+        ],
       },
     ],
   },

@@ -44,7 +44,7 @@
       <div $exist="start&&target" class="game" +loading="{entry: null, input: '', list: [], checking: false}">
         <div class="btn-group">
           <input class="char-input" $value#input="input" $watch="entry?checking=true:null" +keydown="$event.key===' '?$event.preventDefault():null" maxlength="1"/>
-          <div class="input-btn" +click="pushToEntry($scope),console.log(entry)"><span>祝你好运</span></div>
+          <div class="input-btn" +click="pushToEntry($scope)"><span>祝你好运</span></div>
         </div>
         <board +loading="target"></board>
         <div class="letter-board">
